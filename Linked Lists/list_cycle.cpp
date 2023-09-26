@@ -11,18 +11,19 @@ ListNode* Solution::detectCycle(ListNode* head) {
     // Do not read input, instead use the arguments to the function.
     // Do not print the output, instead return values as specified
     // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
-    ListNode *slow = head, *fast = head;
-    while (fast != NULL && fast->next != NULL) {
-        slow = slow->next;
+    ListNode* fast = head, *slow = head;
+    while(fast!=NULL && fast->next!=NULL){
         fast = fast->next->next;
-        if (slow == fast) {
-            ListNode *slow2 = head;
-            while (slow2 != slow) {
-                slow = slow->next;
-                slow2 = slow2->next;
-            }
-            return slow;
-        }
+        slow = slow->next;
+        if(fast == slow) break;
     }
-    return NULL;
+    if(fast==NULL || fast->next==NULL) return NULL;
+    ListNode* out_loop = head; //pointer starting at outside the loop
+    ListNode* in_loop = slow; //pointer starting where the loop is detected (inside the loop)
+    
+    while(out_loop != in_loop){ //will definitely meet at the starting point of loop
+        out_loop = out_loop->next; //mathematically proved!
+        in_loop = in_loop->next;
+    }
+    return in_loop;
 }
