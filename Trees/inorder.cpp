@@ -7,22 +7,15 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+void inorder(TreeNode* root, vector<int>& ans){
+    if(root == NULL) return;
+    inorder(root->left, ans);
+    ans.push_back(root->val);
+    inorder(root->right, ans);
+} 
+ 
 vector<int> Solution::inorderTraversal(TreeNode* root) {
     vector<int> ans;
-    if(root == NULL) return ans;
-    stack<TreeNode* >st;
-    while(1){
-        if(root != NULL){
-            st.push(root);
-            root = root->left;
-        }
-        else{
-            if(st.empty()) break;
-            root = st.top();
-            ans.push_back(root->val);
-            st.pop();
-            root = root->right;
-        }
-    }
+    inorder(root, ans);
     return ans;
 }
